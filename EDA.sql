@@ -112,3 +112,23 @@ SELECT dates, SUM(total_laid_off) OVER (ORDER BY dates ASC) as rolling_total_lay
 FROM DATE_CTE
 ORDER BY dates ASC;
 
+ -- Average Total Layoffs per Company
+SELECT company, AVG(total_laid_off) AS avg_laid_off
+FROM world_layoffs.layoffs_staging2
+GROUP BY company
+ORDER BY avg_laid_off DESC;
+
+
+-- Companies with Layoffs Greater Than a Threshold (e.g., more than 5000)
+SELECT company, total_laid_off
+FROM world_layoffs.layoffs_staging2
+WHERE total_laid_off > 5000
+ORDER BY total_laid_off DESC;
+
+-- Percentage of Layoffs by Industry
+SELECT industry, AVG(percentage_laid_off) AS avg_percentage_laid_off
+FROM world_layoffs.layoffs_staging2
+WHERE percentage_laid_off IS NOT NULL
+GROUP BY industry
+ORDER BY avg_percentage_laid_off DESC;
+
